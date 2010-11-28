@@ -149,6 +149,9 @@ typedef id OFFlickrAPIRequestDelegateType;
 - (BOOL)callAPIMethodWithGET:(NSString *)inMethodName arguments:(NSDictionary *)inArguments;
 - (BOOL)callAPIMethodWithPOST:(NSString *)inMethodName arguments:(NSDictionary *)inArguments;
 
+// methods to call from threads / blocking connections
+- (NSURL *)urlAPIMethodWithGET:(NSString *)inMethodName arguments:(NSDictionary *)inArguments;
+
 // image upload—we use NSInputStream here because we want to have flexibity; with this you can upload either a file or NSData from NSImage
 - (BOOL)uploadImageStream:(NSInputStream *)inImageStream suggestedFilename:(NSString *)inFilename MIMEType:(NSString *)inType arguments:(NSDictionary *)inArguments;
 

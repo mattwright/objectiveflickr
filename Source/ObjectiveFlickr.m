@@ -357,6 +357,17 @@ typedef unsigned int NSUInteger;
 	return [HTTPRequest performMethod:LFHTTPRequestGETMethod onURL:[NSURL URLWithString:URLString] withData:nil];
 }
 
+- (NSURL *)urlAPIMethodWithGET:(NSString *)inMethodName arguments:(NSDictionary *)inArguments
+{
+	// combine the parameters
+	NSMutableDictionary *newArgs = inArguments ? [NSMutableDictionary dictionaryWithDictionary:inArguments] : [NSMutableDictionary dictionary];
+	[newArgs setObject:inMethodName forKey:@"method"];
+	NSString *query = [context signedQueryFromArguments:newArgs];
+	NSString *URLString = [NSString stringWithFormat:@"%@?%@", [context RESTAPIEndpoint], query];
+
+	return [NSURL URLWithString:URLString];
+}
+
 - (BOOL)callAPIMethodWithPOST:(NSString *)inMethodName arguments:(NSDictionary *)inArguments
 {
     if ([HTTPRequest isRunning]) {
