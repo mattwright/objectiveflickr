@@ -134,6 +134,32 @@ typedef unsigned int NSUInteger;
 	return [NSURL URLWithString:URLString];
 }
 
+- (NSURL *)buddyIconSourceURLFromDictionary:(NSDictionary *)inDictionary
+{
+	// http://farm{iconfarm}.static.flickr.com/{iconserver}/buddyicons/{nsid}.jpg
+	// http://www.flickr.com/images/buddyicon.jpg
+
+	NSString *server = [inDictionary objectForKey:@"iconserver"];
+	NSString *nsid = [inDictionary objectForKey:@"nsid"];
+
+	if (![server length] || [server intValue] <= 0 || ![nsid length]) {
+		return [NSURL URLWithString:@"http://www.flickr.com/images/buddyicon.jpg"];
+	}
+
+	NSMutableString *URLString = [NSMutableString stringWithString:@"http://"];
+
+	NSString *farm = [inDictionary objectForKey:@"iconfarm"];
+	if ([farm length]) {
+		[URLString appendFormat:@"farm%@.", farm];
+	}
+
+	[URLString appendFormat:@"static.flickr.com/%@/buddyicons/%@.jpg",
+		server, nsid];
+
+	return [NSURL URLWithString:URLString];
+}
+
+
 - (NSURL *)photoWebPageURLFromDictionary:(NSDictionary *)inDictionary
 {
 	return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@/%@", photoWebPageSource, [inDictionary objectForKey:@"owner"], [inDictionary objectForKey:@"id"]]];
