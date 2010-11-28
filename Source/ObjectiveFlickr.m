@@ -368,6 +368,10 @@ typedef unsigned int NSUInteger;
 	return [NSURL URLWithString:URLString];
 }
 
+- (NSDictionary *)dictionaryFromRequestData:(NSData *)requestData {
+	return [OFXMLMapper dictionaryMappedFromXMLData:requestData];
+}
+
 - (BOOL)callAPIMethodWithPOST:(NSString *)inMethodName arguments:(NSDictionary *)inArguments
 {
     if ([HTTPRequest isRunning]) {
